@@ -10,84 +10,92 @@
 // --------------------------------------------------
 
 // First, we create a variable for the current scene being displayed
-let currentScene = "backyard";
+let currentScene = "prologue";
 
 // Then, we create an object that stores the data for each scene,
 const scenes = {
-  // See "backyard" for the first example
-  backyard: {
-    title: "Location: Backyard",
-    character: "Interviewee:Grandma",
-    text: "Text: well what I remember happening is that Darcie went inside to play with her pretend kitchen, I heard her neighbor mention he was really hungry, and the dog ran around really quickly",
+  // See "prologue" for the first example
+  prologue: {
+    title: "Prologue",
+    image: "Picture of person at a desk",
+    text: "You're sitting, trying to start your assignment, but you can't focus. You feel like your brain is foggy and you start to feel faint. Next thing you know, your head is hitting your desk.",
     // you can choose how many choices to include
     // each choice can have text, an action, and/or nextScene
     choices: [
       {
-        text: "Chase after the dog (-10 HP)",
-        action: function () {
-          updateHealth(-10);
-        },
-        nextScene: "entrance"
-      },
-      {
-        text: "Ask about the neighbor",
-        nextScene: "hallway"
-      },
-      {
-          text: "Pick up the brass key",
-          action: function () {
-            pickUpItem("brass key");
-          },
-          nextScene: "hallway"
+        text: "Open your eyes",
+        nextScene: "Frontal Lobe"
       }
     ]
   },
 
-  entrance: {
-    title: "Location: Entrance",
-    character: "Interviewee:Neighbor",
-    text: "well what I remember...",
+  Frontal Lobe: {
+    title: "Frontal Lobe",
+    image: "image of brain",
+    text: "You open your eyes and find yourself in a strange, gloomy hub of your brain. A molecule floats by and you reach out to tap it. Suddenly, you feel your attention focus in and a synapse next to you fires. You remember your assignment and feel an newfound drive to finish it. The dopamine molecule beings to float away.",
     choices: [
       {
-        text: "Ask about the dog",
-        nextScene: "backyard"
+        text: "Follow the dopamine",
+        nextScene: "Temporal Lobe"
       },
          {
-        text: "Ask about the neighbor",
-        nextScene: "hallway"
+        text: "Follow the firing synapses",
+        nextScene: "Occipital Lobe"
       }
     ]
   },
 
-  hallway: {
-    title: "The Hallway",
-    text: "The hallway is dark and silent.",
+  Temporal Lobe: {
+    title: "Temporal Lobe",
+    image: "image of brain",
+    text: "Pushing through the fog with your ears ringing and jumping at every background noise, you discover a new hub, which is responsable for audio processing. In front of you, there's a cluster of Acetylcholine molecules, but to the side there's a thick, mysterious fog. The Acetylcholine molecules swirl by and you feel your hearing sharpen.",
     choices: [
       {
-        text: "backyard",
-        nextScene: "lockedDoor"
-      }
-    ]
-  },
-
-   lockedDoor: {
-    title: "The Locked Door",
-    text: "The door handle doesn't move.",
-    choices: [
-      {
-        text: "Try to open it",
-        action: unlockDoor
+        text: "Follow the Acetylcholine",
+        nextScene: "Parietal Lobe"
       },
       {
-        text: "Go back",
-        nextScene: "backyard"
+        text: "Explore the fog",
+        nextScene: "Occipital Lobe"
+      }
+    ]
+  },
+
+   Occipital Lobe: {
+    title: "Occipital Lobe",
+    image: "image of brain",
+    text: "Pushing through the fog, you find a new hub, responsable for processing visual information. Your eyes flick around without much focus. In front of you, there's a cluster of Acetylcholine molecules, but to the side there's a thick, mysterious fog. The Acetylcholine molecules swirl by and you feel your vision clear.",
+    choices: [
+      {
+        text: "Follow the Acetylcholine",
+        nextScene: "Parietal Lobe"
+      },
+      {
+        text: "Explore the fog",
+        nextScene: "Temporal Lobe"
+      }
+    ]
+  },
+
+  Parietal Lobe: {
+    title: "Parietal Lobe",
+    image: "image of brain",
+    text: "You've become more aware of your surroundings, but you still feel a great disconnect from your body and you being to stress. In your exploration you find a hub with a norepinephrine molecule on the ground. As you pick it up it begins to glow and you start to feel your body on the desk. The Norepinephrine molecule floats up and joins the other two molecules, flowing away.",
+    choices: [
+      {
+        text: "Follow the molecules",
+        nextScene: "Spinal Cord"
+      },
+      {
+        text: "Wander the brain",
+        nextScene: "Game Over"
       }
     ]
   },
 
    solution: {
-    title: "The solution",
-    text: "You solved the mystery!",
+    title: "Spinal Cord",
+    text: "You reach the hub where the molecules flow to the body and you join them in the Spinal Cord. You return to your body feeling less stressed and focused. You finish your assignment and feel accomplished.",
     
   }
 };
