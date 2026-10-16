@@ -18,82 +18,131 @@ const scenes = {
   prologue: {
     title: "Prologue",
     image: "Picture of person at a desk",
-    text: "You're sitting, trying to start your assignment, but you can't focus. You feel like your brain is foggy and you start to feel faint. Next thing you know, your head is hitting your desk.",
+    text: "You're sitting, trying to start your (add favorite subject) assignment, but you can't focus. You feel like your brain is foggy and you start to feel faint. Next thing you know, your head is hitting your desk.",
     // you can choose how many choices to include
     // each choice can have text, an action, and/or nextScene
     choices: [
       {
         text: "Open your eyes",
-        nextScene: "Frontal Lobe"
+        nextScene: "frontalLobe"
       }
     ]
   },
 
-  Frontal Lobe: {
+  frontalLobe: {
     title: "Frontal Lobe",
     image: "image of brain",
     text: "You open your eyes and find yourself in a strange, gloomy hub of your brain. A molecule floats by and you reach out to tap it. Suddenly, you feel your attention focus in and a synapse next to you fires. You remember your assignment and feel an newfound drive to finish it. The dopamine molecule beings to float away.",
     choices: [
       {
         text: "Follow the dopamine",
-        nextScene: "Temporal Lobe"
+        action: function() {
+         if(stress > 0) {       
+          updateStress(-10);
+        }
+         pickUpItem("Dopamine");
+      },
+        nextScene: "temporalLobe"
       },
          {
         text: "Follow the firing synapses",
-        nextScene: "Occipital Lobe"
+        action: function() {
+          updateStress(+10);
+        },
+        nextScene: "occipitalLobe"
       }
     ]
   },
 
-  Temporal Lobe: {
+  temporalLobe: {
     title: "Temporal Lobe",
     image: "image of brain",
     text: "Pushing through the fog with your ears ringing and jumping at every background noise, you discover a new hub, which is responsable for audio processing. In front of you, there's a cluster of Acetylcholine molecules, but to the side there's a thick, mysterious fog. The Acetylcholine molecules swirl by and you feel your hearing sharpen.",
     choices: [
       {
-        text: "Follow the Acetylcholine",
-        nextScene: "Parietal Lobe"
+        text: "Follow the Acetylcholine",        
+        action: function() {
+        if(stress > 0) {        
+          updateStress(-10);
+        }
+        pickUpItem("Acetylcholine");
+        },
+        nextScene: "parietalLobe"
       },
       {
         text: "Explore the fog",
-        nextScene: "Occipital Lobe"
+        action: function() {
+          updateStress(+10);
+          if(stress>20){
+         updateScene("gameOver");
+        }
+        },
+        nextScene: "occipitalLobe"
       }
     ]
   },
 
-   Occipital Lobe: {
+   occipitalLobe: {
     title: "Occipital Lobe",
     image: "image of brain",
     text: "Pushing through the fog, you find a new hub, responsable for processing visual information. Your eyes flick around without much focus. In front of you, there's a cluster of Acetylcholine molecules, but to the side there's a thick, mysterious fog. The Acetylcholine molecules swirl by and you feel your vision clear.",
     choices: [
       {
         text: "Follow the Acetylcholine",
-        nextScene: "Parietal Lobe"
+        action: function() {
+        if(stress > 0) {
+          updateStress(-10);
+        }
+          pickUpItem("Acetylcholine");
+        },
+        nextScene: "parietalLobe"
       },
       {
         text: "Explore the fog",
-        nextScene: "Temporal Lobe"
+        action: function() {
+          updateStress(+10);
+          if(stress>20){
+         updateScene("gameOver");
+        }
+        },
+        nextScene: "temporalLobe"
       }
     ]
   },
 
-  Parietal Lobe: {
+  parietalLobe: {
     title: "Parietal Lobe",
     image: "image of brain",
     text: "You've become more aware of your surroundings, but you still feel a great disconnect from your body and you being to stress. In your exploration you find a hub with a norepinephrine molecule on the ground. As you pick it up it begins to glow and you start to feel your body on the desk. The Norepinephrine molecule floats up and joins the other two molecules, flowing away.",
     choices: [
       {
         text: "Follow the molecules",
-        nextScene: "Spinal Cord"
+        action: function() {
+          if(stress > 0) {
+            updateStress(-10);
+          }
+         pickUpItem("Norepinephrine"); 
+        },
+        nextScene: "spinalCord"
       },
       {
         text: "Wander the brain",
-        nextScene: "Game Over"
+        nextScene: "gameOver"
+      }
+    ]
+  },
+  gameOver: {
+    title: "Game Over",
+    text: "You gotten lost in the fog of the brain, and you can't find your way out. The stress begins to overtake you.",
+    choices: [
+      {
+        text: "Retry and properly explore the brain",
+        nextScene: "prologue"
       }
     ]
   },
 
-   solution: {
+   spinalCord: {
     title: "Spinal Cord",
     text: "You reach the hub where the molecules flow to the body and you join them in the Spinal Cord. You return to your body feeling less stressed and focused. You finish your assignment and feel accomplished.",
     
@@ -173,19 +222,19 @@ updateScene(currentScene);
 // --------------------------------------------------
 
 // Create a variable for health
-let health = 100;
+let stress = 10;
 
-// Display current health
-const healthDisplay = document.getElementById("health-display");
+// Display current stress
+const stressDisplay = document.getElementById("stress-display");
 
-// Create a function to update health 
-function updateHealth(amount) {
-  health += amount;
-  healthDisplay.textContent = health;
+// Create a function to update stress 
+function updateStress(amount) {
+  stress += amount;
+  stressDisplay.textContent = stress;
 }
 
-// This refreshes the health display
-updateHealth(0);
+// This refreshes the stress display
+updateStress(0);
 
 // --------------------------------------------------
 // INVENTORY
@@ -216,11 +265,9 @@ function pickUpItem(itemName) {
 // --------------------------------------------------
 
 // Create a function that checks if the inventory contains one item and if so shows the win condition scene.
-function unlockDoor() {
-  if (inventory.includes("brass key")) {
+function escape() {
+  if (inventory.includes("Dopamine") && inventory.includes("Acetylcholine") && inventory.includes("Norepinephrine")) {
     updateScene("solution");
-  } else {
-    messageDisplay.textContent = "The door is locked.";
   }
 }
 

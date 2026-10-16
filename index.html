@@ -7,12 +7,37 @@
 </head>
 <body>
     <h1>The Brain Game</h1>
-<p><a href="about.html">About Me!</a></p>
-<p>It's late at night and you have a very important exam tomorrow at school. You've known about this exam for a week or two, but you haven't started studying yet (You keep saying, "I'll start studying tomorrow.") Your brain feels foggy from all the stress and you pass out, hitting your head on the desk in front of you. When you wake up, you're in an unfamiliar place. How do you get out?</p>
+<p><a href="about.html">About Me</a>
+
+<p>It's late at night and you have a very important assignment due for your favorite subject tomorrow at school. You've known about this assignment for a week or two, but you haven't started working on it yet (You keep saying, "I'll start working on it tomorrow.") Your brain feels foggy from all the stress and you pass out, hitting your head on the desk in front of you. When you wake up, you're in an unfamiliar place. How do you get out?</p>
 <img src="https://assets.technologynetworks.com/production/dynamic/images/content/341872/what-lies-between-grey-and-white-in-the-brain-341872-640x360.jpg" alt="brain pic" width="200" height="100">
+
     <form>
-     
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name"> 
+<br>
+      <label for="subject">Favorite Subject:</label>
+      <select id="subject" name="subject" placeholder="Select your favorite subject">
+        <option>Select your favorite subject</option>
+        <option value="math">Math</option>
+        <option value="science">Science</option>
+        <option value="english">English</option>
+        <option value="history">History</option>
+        <option value="art">Art</option>
+<br>        
+      </select>
+      <P>Are you excited to play?</P>
+      <label for="yes">Yes</label>
+      <input type="radio" id="yes" name="excited" value="yes">
+      <label for="no">No</label>
+      <input type="radio" id="no" name="excited" value="no"> 
+      <label for="maybe">Maybe</label>
+      <input type="radio" id="maybe" name="excited" value="maybe">
+      </select>
+<br>
+   <input type="submit" value="Submit">
     </form>
+  <p><a href="game.html">Play the game!</a></p>  
 </body>
 </html>
 
