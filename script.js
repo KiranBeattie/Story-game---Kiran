@@ -121,7 +121,13 @@ const scenes = {
           if(stress > 0) {
             updateStress(-10);
           }
-         pickUpItem("Norepinephrine"); 
+          pickUpItem("Norepinephrine");
+          const requiredChemicals = ["Dopamine", "Acetylcholine", "Norepinephrine"];
+          if (!requiredChemicals.every(function(chemical) {
+            return inventory.includes(chemical);
+          })) {
+            updateScene("missingChemicals");
+          }
         },
         nextScene: "spinalCord"
       },
@@ -137,7 +143,24 @@ const scenes = {
     choices: [
       {
         text: "Retry and properly explore the brain",
+        action: function() {
+          stress = 10;
+          stressDisplay.textContent = stress;
+          inventory = [];
+          inventoryDisplay.textContent = "";
+        },
         nextScene: "prologue"
+      }
+    ]
+  },
+
+  missingChemicals: {
+    title: "Missing Chemicals",
+    text: "You reach the spinal cord, but the path back to your body is incomplete. You need Dopamine, Acetylcholine, and Norepinephrine to return safely.",
+    choices: [
+      {
+        text: "Return to the brain",
+        nextScene: "frontalLobe"
       }
     ]
   },
@@ -198,7 +221,7 @@ function updateScene(sceneName) {
         choice.action();
       }
 
-      if (choice.nextScene) {
+      if (choice.nextScene && currentScene === sceneName) {
         updateScene(choice.nextScene);
       }
     });
@@ -231,6 +254,9 @@ const stressDisplay = document.getElementById("stress-display");
 function updateStress(amount) {
   stress += amount;
   stressDisplay.textContent = stress;
+  if (stress > 20) {
+    updateScene("gameOver");
+  }
 }
 
 // This refreshes the stress display
